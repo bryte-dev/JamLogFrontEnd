@@ -13,7 +13,7 @@ export default function Login() {
     try {
       const res = await api.post("/auth/login", { email, password });
       await login(res.data.token);
-      router.replace("/");
+      router.replace("/appindex");
     } catch (err) {
       console.error("LOGIN ERROR", err);
     }
