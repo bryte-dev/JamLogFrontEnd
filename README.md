@@ -1,35 +1,35 @@
 # JamLog Frontend
 
-Application frontend de **JamLog**, une application destinée aux musiciens pour organiser leurs projets, morceaux, événements et ressources associées.
+JamLog Frontend is the client application for the JamLog project, built for musicians who want to organize their projects, songs, rehearsals, concerts, and related resources in one place.
 
-Ce dépôt contient l'application mobile et web basée sur Expo, React Native et TypeScript. Il est prévu pour communiquer avec le backend disponible dans le dépôt [`JamLog`](https://github.com/bryte-dev/JamLog).
+This repository contains the mobile and web frontend built with Expo, React Native, and TypeScript. It is designed to connect to the backend API in the [`JamLog`](https://github.com/bryte-dev/JamLog) repository.
 
-> **État du projet : prototype en cours de développement**
+> Project status: early prototype / active development
 >
-> Le frontend contient actuellement la structure de navigation, les écrans d'inscription et de connexion ainsi qu'une première gestion du token d'authentification. L'interface principale de gestion musicale reste encore à développer.
+> The frontend currently includes the app navigation structure, authentication screens, and a first implementation of token-based auth flow. The main user dashboard and core music-management features are still under development.
 
 ---
 
-## Objectif du projet
+## Project goal
 
-JamLog a pour objectif d'aider les musiciens à organiser leur travail au même endroit.
+JamLog exists to help musicians keep everything related to their work in one place.
 
-L'application est prévue pour gérer progressivement :
+The app is expected to eventually manage:
 
-- les utilisateurs ;
-- les projets musicaux ;
-- les groupes et membres ;
-- les morceaux ;
-- la progression des morceaux ;
-- les répétitions ;
-- les concerts ;
-- les sessions d'enregistrement ;
-- les fichiers liés aux projets ;
-- les ressources partagées entre membres.
+- users;
+- music projects;
+- groups and members;
+- songs;
+- song progress tracking;
+- rehearsals;
+- concerts;
+- recording sessions;
+- project-related files;
+- shared resources between collaborators.
 
 ---
 
-## Stack technique
+## Tech stack
 
 - **React Native**
 - **Expo**
@@ -40,11 +40,11 @@ L'application est prévue pour gérer progressivement :
 - **Expo Secure Store**
 - **React Native Web**
 
-Le projet utilise Expo Router pour organiser les écrans à partir de la structure de dossiers du répertoire `app`.
+The project uses Expo Router to structure screens using the `app` folder.
 
 ---
 
-## Structure du projet
+## Project structure
 
 ```text
 JamLogFrontEnd/
@@ -52,25 +52,21 @@ JamLogFrontEnd/
 │   ├── app/
 │   │   ├── _layout.tsx
 │   │   ├── index.tsx
-│   │   │
 │   │   ├── auth/
 │   │   │   ├── authindex.tsx
 │   │   │   ├── login.tsx
 │   │   │   └── register.tsx
-│   │   │
 │   │   └── (app)/
 │   │       └── appindex.tsx
 │   │
 │   ├── src/
 │   │   ├── api/
 │   │   │   └── api.ts
-│   │   │
 │   │   ├── context/
 │   │   │   └── authContext.tsx
-│   │   │
-│   │   └── services/
-│   │       ├── authService.ts
-│   │       └── tokenService.ts
+│   │   ├── services/
+│   │   │   ├── authService.ts
+│   │   │   └── tokenService.ts
 │   │
 │   ├── assets/
 │   │   └── images/
@@ -83,35 +79,36 @@ JamLogFrontEnd/
 │
 ├── .env
 ├── project_structure.md
-└── LICENSE
+├── LICENSE
+└── README.md
 ```
 
 ---
 
-## Architecture de navigation
+## Navigation architecture
 
-L'application utilise Expo Router.
+The app uses Expo Router.
 
-Le dossier `app` représente la structure de navigation.
+The `app` directory represents the app's navigation structure.
 
-### Écran racine
+### Root screen
 
-Le fichier `app/index.tsx` vérifie si un token existe.
+The file `app/index.tsx` checks whether a token is present.
 
-- sans token : redirection vers l'espace d'authentification ;
-- avec token : redirection vers l'espace de l'application.
+- if no token is present: redirect to the auth area;
+- if a token is present: redirect to the main app area.
 
-### Layout principal
+### Main layout
 
-Le fichier `app/_layout.tsx` fournit le contexte d'authentification à toute l'application.
+The file `app/_layout.tsx` provides the authentication context to the whole app.
 
-Il affiche :
+It displays:
 
-- la partie `auth` si l'utilisateur n'est pas connecté ;
-- la partie `(app)` si l'utilisateur possède un token ;
-- un indicateur de chargement pendant la lecture du token enregistré.
+- the `auth` section if the user is not logged in;
+- the `(app)` section if the user has a token;
+- a loading indicator while the saved token is being read.
 
-### Espace d'authentification
+### Authentication area
 
 ```text
 app/auth/
@@ -120,165 +117,165 @@ app/auth/
 └── register.tsx
 ```
 
-Cet espace contient :
+This area contains:
 
-- l'écran de choix entre connexion et inscription ;
-- l'écran de connexion ;
-- l'écran d'inscription.
+- login/register choice screen;
+- login screen;
+- register screen.
 
-### Espace application
+### App area
 
 ```text
 app/(app)/
 └── appindex.tsx
 ```
 
-Cet espace correspond à la partie accessible après connexion.
+This area is the part visible after login.
 
-L'écran actuel affiche simplement :
+The current screen mainly shows:
 
 ```text
-Bienvenue dans JamLog 🎸
+Welcome to JamLog 🎸
 ```
 
 ---
 
-## Communication avec le backend
+## Backend communication
 
-Le frontend est prévu pour communiquer avec le backend du dépôt `JamLog`.
+The frontend is designed to work with the backend in the `JamLog` repository.
 
-Le client HTTP est configuré dans :
+The HTTP client is configured in:
 
 ```text
 src/api/api.ts
 ```
 
-La bibliothèque Axios est utilisée pour effectuer les appels HTTP.
+The project uses Axios for API requests.
 
-### Adresse actuellement configurée
+### Current configured address
 
-L'adresse actuellement présente dans la configuration Axios est :
+The currently configured Axios base URL is:
 
 ```text
 http://192.168.100.145:3000
 ```
 
-Cette adresse correspond à une configuration réseau locale et dépend de la machine qui héberge le backend.
+This is a local network configuration and depends on the machine hosting the backend.
 
-Elle peut devoir être adaptée selon :
+It may need updating depending on:
 
-- l'adresse IP locale de l'ordinateur ;
-- l'utilisation d'un téléphone physique ;
-- l'utilisation d'un émulateur ;
-- l'utilisation du web ;
-- le réseau Wi-Fi utilisé.
+- the local IP address of the computer;
+- physical device usage;
+- emulator usage;
+- web usage;
+- current Wi-Fi network.
 
 ---
 
-## Authentification
+## Authentication flow
 
-La gestion de l'authentification repose sur un contexte React.
+Auth logic is managed through a React context.
 
-Le fichier principal est :
+The main file is:
 
 ```text
 src/context/authContext.tsx
 ```
 
-Le contexte gère :
+The context manages:
 
-- le token courant ;
-- l'état de chargement ;
-- la connexion ;
-- la déconnexion ;
-- la récupération du token au démarrage.
+- current token;
+- loading state;
+- login;
+- logout;
+- token recovery on app startup.
 
-### Connexion
+### Login
 
-Le formulaire de connexion se trouve dans :
+The login form is in:
 
 ```text
 app/auth/login.tsx
 ```
 
-Il envoie une requête au backend :
+It sends a request to the backend:
 
 ```http
 POST /auth/login
 ```
 
-Corps envoyé :
+Request body example:
 
 ```json
 {
-  "email": "musicien@example.com",
-  "password": "mot-de-passe"
+  "email": "musician@example.com",
+  "password": "password"
 }
 ```
 
-Lorsque le backend renvoie un token :
+When the backend returns a token:
 
-1. le token est sauvegardé ;
-2. le contexte d'authentification est mis à jour ;
-3. l'utilisateur est redirigé vers l'espace connecté.
+1. the token is stored;
+2. the auth context is updated;
+3. the user is redirected to the authenticated area.
 
-### Inscription
+### Register
 
-Le formulaire d'inscription se trouve dans :
+The register form is in:
 
 ```text
 app/auth/register.tsx
 ```
 
-Il envoie :
+It sends:
 
 ```http
 POST /auth/register
 ```
 
-Corps envoyé :
+Request body example:
 
 ```json
 {
-  "email": "musicien@example.com",
-  "username": "musicien",
-  "password": "mot-de-passe"
+  "email": "musician@example.com",
+  "username": "musician",
+  "password": "password"
 }
 ```
 
-Après une inscription réussie, l'utilisateur est redirigé vers l'écran de connexion.
+After a successful registration, the user is redirected to the login screen.
 
 ---
 
-## Stockage du token
+## Token storage
 
-Le service :
+The service:
 
 ```text
 src/services/tokenService.ts
 ```
 
-utilise deux mécanismes selon la plateforme.
+uses two storage strategies depending on the platform.
 
 ### Web
 
-Le token est stocké dans :
+Tokens are stored in:
 
 ```text
 localStorage
 ```
 
-### Android et iOS
+### Android and iOS
 
-Le token est stocké avec :
+Tokens are stored using:
 
 ```text
 expo-secure-store
 ```
 
-Cette séparation permet d'utiliser un stockage adapté à chaque environnement.
+This allows storage behavior to adapt to each environment.
 
-La clé utilisée est :
+The key used is:
 
 ```text
 jamlog_token
@@ -286,16 +283,16 @@ jamlog_token
 
 ---
 
-## Services disponibles
+## Available services
 
 ### `authService.ts`
 
-Ce service contient des fonctions prévues pour :
+This service contains functions intended for:
 
-- se connecter ;
-- s'inscrire.
+- logging in;
+- registering.
 
-Fonctions principales :
+Main functions:
 
 ```ts
 login(email, password)
@@ -304,7 +301,7 @@ register(email, username, password)
 
 ### `tokenService.ts`
 
-Ce service contient les fonctions :
+This service contains functions such as:
 
 ```ts
 saveToken(token)
@@ -314,7 +311,7 @@ removeToken()
 
 ### `authContext.tsx`
 
-Ce contexte rend disponibles :
+This context exposes:
 
 ```ts
 token
@@ -327,7 +324,7 @@ loading
 
 ## Installation
 
-Cloner le dépôt puis accéder au dossier de l'application :
+Clone the repository and enter the frontend folder:
 
 ```bash
 git clone https://github.com/bryte-dev/JamLogFrontEnd.git
@@ -337,9 +334,9 @@ npm install
 
 ---
 
-## Lancement
+## Running the app
 
-### Démarrer Expo
+### Start Expo
 
 ```bash
 npm start
@@ -363,7 +360,7 @@ npm run ios
 npm run web
 ```
 
-### Vérification du code
+### Lint check
 
 ```bash
 npm run lint
@@ -371,247 +368,247 @@ npm run lint
 
 ---
 
-## Configuration avec le backend
+## Backend configuration
 
-Pour utiliser le frontend avec le backend JamLog :
+To use the frontend with the JamLog backend:
 
-1. démarrer le backend ;
-2. vérifier que PostgreSQL est disponible ;
-3. vérifier l'adresse IP utilisée par le backend ;
-4. vérifier que le frontend utilise cette même adresse ;
-5. vérifier la configuration CORS du backend ;
-6. lancer Expo sur le web, un émulateur ou un appareil physique.
+1. start the backend;
+2. verify that PostgreSQL is available;
+3. check the backend IP address;
+4. ensure the frontend uses the same address;
+5. check the backend CORS configuration;
+6. launch Expo on web, emulator, or physical device.
 
-Le frontend appelle actuellement les endpoints suivants :
+The frontend currently calls these endpoints:
 
 ```text
 POST /auth/register
 POST /auth/login
 ```
 
-Ces endpoints correspondent aux routes d'authentification présentes dans le backend.
+These endpoints match the backend routes.
 
 ---
 
-## Flux actuel de l'application
+## Current app flow
 
-Le flux principal est le suivant :
+The main flow is:
 
 ```text
-Lancement de l'application
+App launch
     ↓
-Lecture du token enregistré
+Read stored token
     ↓
-Token absent ?
-    ├── Oui → écran d'authentification
-    │            ├── Connexion
-    │            └── Inscription
+Token missing?
+    ├── Yes → authentication screen
+    │            ├── Login
+    │            └── Register
     │
-    └── Non → espace de l'application
+    └── No → app area
 ```
 
-### Flux d'inscription
+### Register flow
 
 ```text
-Écran Register
+Register screen
     ↓
 POST /auth/register
     ↓
-Utilisateur créé dans le backend
+User created in backend
     ↓
-Redirection vers Login
+Redirect to login
 ```
 
-### Flux de connexion
+### Login flow
 
 ```text
-Écran Login
+Login screen
     ↓
 POST /auth/login
     ↓
-Réception du JWT
+JWT token received
     ↓
-Stockage du token
+Token stored locally
     ↓
-Mise à jour du AuthContext
+AuthContext updated
     ↓
-Redirection vers l'espace connecté
+Redirect to authenticated area
 ```
 
 ---
 
-## État actuel du projet
+## Current status
 
-### Fonctionnalités présentes
+### Features already present
 
-- projet Expo initialisé ;
-- application React Native ;
-- configuration TypeScript ;
-- navigation avec Expo Router ;
-- écran de choix Login/Register ;
-- formulaire d'inscription ;
-- formulaire de connexion ;
-- communication Axios avec le backend ;
-- stockage du token ;
-- contexte global d'authentification ;
-- redirection selon l'état de connexion ;
-- écran d'accueil après connexion ;
-- compatibilité prévue avec le web, Android et iOS.
+- Expo project initialized
+- React Native app
+- TypeScript configuration
+- navigation with Expo Router
+- login/register selection screen
+- registration form
+- login form
+- Axios communication with backend
+- token storage
+- global auth context
+- redirection based on connection state
+- welcome screen after login
+- web, Android, and iOS compatibility planned
 
-### Fonctionnalités encore incomplètes
+### Features still incomplete
 
-- tableau de bord réel ;
-- affichage du profil utilisateur ;
-- création et gestion de projets ;
-- ajout et gestion de membres ;
-- création d'événements ;
-- gestion des morceaux ;
-- suivi de la progression des morceaux ;
-- ajout et consultation de fichiers ;
-- partage de ressources ;
-- appels aux routes métier du backend ;
-- gestion complète de la déconnexion dans l'interface ;
-- affichage des erreurs à l'utilisateur ;
-- validation avancée des formulaires ;
-- gestion des états de chargement des requêtes ;
-- design final de l'application ;
-- tests automatisés ;
-- configuration de production.
+- real dashboard
+- user profile display
+- project creation and management
+- member management
+- event creation
+- song management
+- track progress tracking
+- file management
+- resource sharing
+- business-route integration
+- complete logout handling in UI
+- clearer user error messages
+- advanced form validation
+- request loading state management
+- final visual design
+- automated tests
+- production configuration
 
 ---
 
-## Limitations connues
+## Known limitations
 
-Le frontend doit être considéré comme une première base d'application.
+The frontend should currently be considered a first application foundation.
 
-### Adresse réseau codée en dur
+### Hardcoded backend address
 
-L'adresse du backend est actuellement définie directement dans le client Axios :
+The backend address is currently defined directly in the Axios client:
 
 ```text
 http://192.168.100.145:3000
 ```
 
-Cette configuration fonctionne uniquement si cette adresse correspond réellement à la machine hébergeant le backend et si celle-ci est accessible depuis l'environnement Expo.
+This only works if that address matches the actual machine running the backend and is reachable from the Expo environment.
 
-### Variable `.env`
+### `.env` file
 
-Un fichier `.env` contient une variable :
+There is a `.env` file containing:
 
 ```dotenv
 API_URL=http://localhost:3000
 ```
 
-Cependant, la configuration Axios utilise actuellement une adresse écrite directement dans le code. La variable `API_URL` n'est donc pas utilisée par le client HTTP dans l'état actuel du projet.
+However, the Axios client currently uses a hardcoded address instead of the environment variable.
 
-### Gestion des erreurs
+### Error handling
 
-Les erreurs de connexion et d'inscription sont actuellement envoyées dans la console avec `console.error`.
+Authentication errors are currently logged to the console with `console.error`.
 
-Elles ne sont pas encore affichées clairement dans l'interface utilisateur.
+They are not yet displayed clearly in the user interface.
 
-### Protection des écrans
+### Screen protection
 
-La navigation dépend de la présence d'un token stocké localement.
+Navigation depends on the presence of a local token.
 
-Le frontend ne vérifie pas encore automatiquement si le token est expiré ou invalide auprès du backend.
+The frontend does not yet automatically verify whether the token is expired or invalid on the backend.
 
-### Interface principale
+### Main app area
 
-L'espace connecté est encore minimal. Il s'agit actuellement d'une page de bienvenue et non d'une interface complète de gestion musicale.
+The authenticated area is still minimal. It is currently only a welcome page rather than a full music management interface.
 
 ---
 
-## Relation avec le backend
+## Relationship with the backend
 
-Le frontend et le backend sont conçus pour fonctionner ensemble.
+The frontend and backend are designed to work together.
 
-### Dépôt backend
+### Backend repo
 
 ```text
 bryte-dev/JamLog
 ```
 
-### Dépôt frontend
+### Frontend repo
 
 ```text
 bryte-dev/JamLogFrontEnd
 ```
 
-### Compatibilité actuelle
+### Current compatibility
 
-Les routes d'authentification sont alignées :
+Authentication routes are aligned:
 
-| Fonction | Frontend | Backend |
+| Function | Frontend | Backend |
 |---|---|---|
-| Inscription | `POST /auth/register` | `POST /auth/register` |
-| Connexion | `POST /auth/login` | `POST /auth/login` |
+| Register | `POST /auth/register` | `POST /auth/register` |
+| Login | `POST /auth/login` | `POST /auth/login` |
 
-Les données envoyées correspondent également :
+The payloads also match:
 
-- email ;
-- username pour l'inscription ;
+- email;
+- username for registration;
 - password.
 
-La connexion complète dépend toutefois de la configuration réseau locale et de la disponibilité du backend.
+However, the full connection still depends on the local network configuration and backend availability.
 
 ---
 
-## Organisation prévue à terme
+## Planned future structure
 
-L'application pourrait progressivement évoluer vers une organisation de ce type :
+The app could eventually evolve toward a structure like this:
 
 ```text
-Authentification
-    ├── Inscription
-    ├── Connexion
-    └── Profil
+Authentication
+    ├── Register
+    ├── Login
+    └── Profile
 
-Projets
-    ├── Liste des projets
-    ├── Détail d'un projet
-    ├── Membres
-    └── Paramètres
+Projects
+    ├── Project list
+    ├── Project details
+    ├── Members
+    └── Settings
 
-Morceaux
-    ├── Liste des morceaux
-    ├── Progression
-    ├── Détails
-    └── Fichiers associés
+Songs
+    ├── Song list
+    ├── Progress tracking
+    ├── Details
+    └── Related files
 
-Événements
-    ├── Calendrier
-    ├── Répétitions
+Events
+    ├── Calendar
+    ├── Rehearsals
     ├── Concerts
-    └── Sessions d'enregistrement
+    └── Recording sessions
 
-Fichiers
+Files
     ├── Documents
     ├── Audios
     ├── Images
-    └── Ressources partagées
+    └── Shared resources
 ```
 
-Cette organisation représente la direction fonctionnelle du projet et non l'ensemble des fonctionnalités actuellement disponibles.
+This represents the intended functional direction, not the full set of features currently available.
 
 ---
 
-## Résumé
+## Summary
 
-JamLog Frontend est une application Expo / React Native / TypeScript servant d'interface utilisateur au projet JamLog.
+JamLog Frontend is an Expo / React Native / TypeScript app that serves as the user interface for the JamLog project.
 
-Le frontend dispose déjà d'un premier flux utilisable :
+It already has a usable first flow:
 
 ```text
-Inscription
+Register
     ↓
-Connexion
+Login
     ↓
-Réception du token JWT
+JWT token received
     ↓
-Stockage local sécurisé
+Local secure token storage
     ↓
-Accès à l'espace connecté
+Access to the authenticated area
 ```
 
-Le projet constitue actuellement une base de navigation et d'authentification. Les fonctionnalités principales liées à l'organisation musicale restent à développer autour du backend et de son modèle de données.
+The project is currently a navigation and authentication foundation. The core music organization features still need to be developed around the backend and product logic.
